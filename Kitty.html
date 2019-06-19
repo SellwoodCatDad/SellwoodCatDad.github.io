@@ -45,27 +45,23 @@
 				</div>
 				<div id="Kitty3DModel" class="col-sm">
 					<script>
-					var renderer = new THREE.WebGLRenderer();
-					renderer.setSize(window.innerWidth/4, window.innerHeight/4);
-					document.getElementById("Kitty3DModel").appendChild(renderer.domElement);
+					var loader = new THREE.FontLoader();
 					
-					var camera = new THREE.PerspectiveCamera(45, window.innerWidth/4 / window.innerHeight/4, 1, 500);
-					camera.position.set(0, 0, 100);
-					camera.lookAt(0, 0, 0);
-					
-					var scene = new THREE.Scene();
-					
-					var material = new THREE.LineBasicMaterial( {color: 0x0000ff });
-					
-					var geometry = new THREE.Geometry();
-					geometry.vertices.push(new THREE.Vector3(-10, 0, 0));
-					geometry.vertices.push(new THREE.Vector3(0, 10, 0));
-					geometry.vertices.push(new THREE.Vector3(10, 0, 0));
-					
-					var line = new THREE.Line(geometry, material);
-					
-					scene.add(line);
-					renderer.render(scene, camera);
+					loader.load('./threeJS/three.js-master/examples/fonts/helvetiker_regular.typeface.json',
+					function (font) {
+						var geometry = new THREE.TextGeometry('Kitty', 
+						{
+							font: font,
+							size: 80,
+							height: 5,
+							curveSegments: 12,
+							bevelEnabled: true,
+							bevelThickness: 10,
+							bevelSize: 8,
+							bevelOffset: 0,
+							bevelSegments: 5
+						});
+					});
 					</script>
 				</div>
 			</div>
