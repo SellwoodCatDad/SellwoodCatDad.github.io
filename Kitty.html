@@ -27,12 +27,16 @@
 							<a class="nav-link" href="index.html">Home<span class="sr-only"current)</span></a>
 						</li>
 						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cat Navigation</a>
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" 
+							aria-haspopup="true" aria-expanded="false">Cat Navigation</a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 								<a class="dropdown-item" href="Kitty.html">Big Stuff's Page</a>
 								<a class="dropdown-item" href="Wit.html">Stain's Page</a>
 								<a class="dropdown-item" href="Wheeze.html">Bug's Page</a>
 							</div>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="ThreeJSWork.html">Three.js Work</a>
 						</li>
 					</ul>
 				</div>
@@ -45,14 +49,23 @@
 				</div>
 				<div id="Kitty3DModel" class="col-sm">
 					<script>
-					var loader = new THREE.FontLoader();
+					var renderer = new THREE.WebGLRenderer();
+					renderer.setSize(window.innerWidth/4, window.innerHeight/4);
+					document.getElementById("Kitty3DModel").appendChild(renderer.domElement);
 					
-					loader.load('./threeJS/three.js-master/examples/fonts/helvetiker_regular.typeface.json',
-					function (font) {
-						var geometry = new THREE.TextGeometry('Kitty', 
-						{
+					var camera = new THREE.PerspectiveCamera(45, window.innerWidth/4 / window.innerHeight/4, 1, 500);
+					camera.position.set(0, 0, 1);
+					camera.lookAt(0, 0, 0);
+					
+					var scene = new THREE.Scene();
+					
+					var loader = new THREE.FontLoader();
+
+					loader.load( './threeJS/three.js-master/examples/fonts/helvetiker_regular.typeface.json', function ( font ) {
+
+						var geometry = new THREE.TextGeometry( 'Kitty', {
 							font: font,
-							size: 80,
+							size: 40,
 							height: 5,
 							curveSegments: 12,
 							bevelEnabled: true,
@@ -61,7 +74,15 @@
 							bevelOffset: 0,
 							bevelSegments: 5
 						});
+						
+						var textMaterial = new THREE.MeshPhongMaterial( 
+						{ color: 0xff0000, specular: 0xffffff });
+						
+						var mesh = new THREE.Mesh(geometry, textMaterial);
+						scene.add(mesh);
 					});
+					
+					renderer.render(scene, camera);
 					</script>
 				</div>
 			</div>
