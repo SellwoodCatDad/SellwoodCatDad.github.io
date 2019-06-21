@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset=utf-8 >
 		<Title>Kitty</Title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta charset=utf-8 />
 		<link rel="stylesheet" href="css/SellwoodCatDadCSS.css" />
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -17,7 +18,7 @@
 		</style>
 	</head>
 	<body>
-		<div> <!--Finish Navbar from Boostrap here-->
+		<div> <!--Navigation bar-->
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
 				<a class="navbar-brand" href="#"></a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,16 +51,16 @@
 					<img id="Kitty" class="border border-info rounded-lg" src="pics/Kitty.jpg" />
 				</div>
 				<div id="Kitty3DModel" class="col-sm">
+					
 					<script>
+					var scene = new THREE.Scene();
+
+					var camera = new THREE.PerspectiveCamera(45, window.innerWidth/4 / window.innerHeight/4, 0.1, 1000);
+					
 					var renderer = new THREE.WebGLRenderer();
 					renderer.setSize(window.innerWidth/4, window.innerHeight/4);
 					document.getElementById("Kitty3DModel").appendChild(renderer.domElement);
 					
-					var camera = new THREE.PerspectiveCamera(45, window.innerWidth/4 / window.innerHeight/4, 1, 500);
-					camera.position.set(0, 0, 1);
-					camera.lookAt(0, 0, 0);
-					
-					var scene = new THREE.Scene();
 					
 					var loader = new THREE.FontLoader();
 
@@ -67,7 +68,7 @@
 
 						var geometry = new THREE.TextGeometry( 'Kitty', {
 							font: font,
-							size: 40,
+							size: 20,
 							height: 5,
 							curveSegments: 12,
 							bevelEnabled: true,
@@ -77,12 +78,19 @@
 							bevelSegments: 5
 						});
 						
-						var textMaterial = new THREE.MeshPhongMaterial( 
-						{ color: 0xff0000, specular: 0xffffff });
-						
-						var mesh = new THREE.Mesh(geometry, textMaterial);
-						scene.add(mesh);
-					});
+						scene.add(geometry);
+					},
+					
+						// onProgress callback
+					function ( xhr ) {
+						console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+					},
+
+					// onError callback
+					function ( err ) {
+						console.log( 'An error happened' );
+					}
+					);
 					
 					renderer.render(scene, camera);
 					</script>
