@@ -50,58 +50,17 @@
 				<div id="KittyImage" class="col-sm">
 					<img id="Kitty" class="border border-info rounded-lg" src="pics/Kitty.jpg" />
 				</div>
-				<div id="Kitty3DModel" class="col-sm">
-					
-					<script>
-					var scene = new THREE.Scene();
-
-					var camera = new THREE.PerspectiveCamera(45, window.innerWidth/4 / window.innerHeight/4, 0.1, 1000);
-					
-					var renderer = new THREE.WebGLRenderer();
-					renderer.setSize(window.innerWidth/4, window.innerHeight/4);
-					document.getElementById("Kitty3DModel").appendChild(renderer.domElement);
-					
-					
-					var loader = new THREE.FontLoader();
-
-					loader.load( './threeJS/three.js-master/examples/fonts/helvetiker_regular.typeface.json', function ( font ) {
-
-						var geometry = new THREE.TextGeometry( 'Kitty', {
-							font: font,
-							size: 20,
-							height: 5,
-							curveSegments: 12,
-							bevelEnabled: true,
-							bevelThickness: 10,
-							bevelSize: 8,
-							bevelOffset: 0,
-							bevelSegments: 5
-						});
-						
-						scene.add(geometry);
-					},
-					
-						// onProgress callback
-					function ( xhr ) {
-						console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
-					},
-
-					// onError callback
-					function ( err ) {
-						console.log( 'An error happened' );
-					}
-					);
-					
-					renderer.render(scene, camera);
-					</script>
+				<div id="Kitty3DName" class="col-sm">
 				</div>
 			</div>
 		</div>
 		<div>
 			<p>Kitty's Bio:</p>
-			<p>Kitty was born only God knows where. However, my wife and I adopted her, shortly after she was, literally, thrown away in a trash can, by some royal dickhead.</p>
-			<p>When found, she had to have nearly all of her teeth extracted, and was in rough shape. She's been beset with s couple of health issues, including: hyperthyroidism, and IBS.</p>
+			<p>Kitty was born only God knows where. However, my wife and I adopted her, shortly after she was, literally, thrown away in a trash can by some royal dickhead.</p>
+			<p>When found, she had to have nearly all of her teeth extracted, and was in rough shape. She's been beset with a couple of health issues, including: hyperthyroidism, and IBS.</p>
 			<p>With enough love, and support, we've got her relatively stable now, and she's the definition of a lap cat.
 		</div>
+		<script src="scripts/KittyName.js">
+		</script>
 	</body>
 </html>
