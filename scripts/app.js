@@ -1,114 +1,148 @@
-//Script for ThreeJSWork.html
-//these need to be accessed inside more than one function so we'll declare them
+// these need to be accessed inside more than one function so we'll declare them first
 let container;
 let camera;
+let controls;
 let renderer;
 let scene;
-let mesh;
+
+const mixers = [];
+const clock = new THREE.Clock();
 
 function init() {
-	//Get a reference to the container element that will hold our scene
-	container = document.querySelector('#scene-container');
-	
-	//create a Scene
-	scene = new THREE.Scene();
-	
-	scene.background = new THREE.Color('skyblue');
-	
-	//setup the options for a perspective camera
-	const fov = 35; //fov = Field of View
-	const aspect = container.clientWidth / container.clientHeight;
-	const near = 0.1;
-	const far = 100;
-	
-	camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-	
-	//every object is initially create at (0, 0, 0)
-	//we'll move the camera back a bit so that we can view the scene
-	camera.position.set(0, 0, 10);
-	
-	//create a geometry
-	const geometry = new THREE.BoxBufferGeometry(2, 2, 2);
-	
-	//create a texture loader.
-	const textureLoader = new THREE.TextureLoader();
-	
-	//Load a texture. See the note in chapter 4 on working locally, or the page
-	//https://three.js.org/docs/#manual/introduction/How-to-run-things-locally
-	//if you run into problems here
-	const texture = textureLoader.load('./threeJS/three.js-master/examples/textures/UV_Grid_Sm.jpg');
-	
-	//set the "color space" of the texture
-	texture.encoding = THREE.sRGBEncoding;
-	
-	//reduce blurring at glancing angles
-	texture.anisotropy = 16;
-	
-	//create a Standard material using the texture we just loaded as a color map
-	const material = new THREE.MeshStandardMaterial( {
-		map: texture
-	});
-	
-	//create a Mesh containing the geometry and material
-	mesh = new THREE.Mesh(geometry, material);
-	
-	//add the mesh to the scene object
-	scene.add(mesh);
-	
-	//create a directional light
-	const light = new THREE.DirectionalLight(0xffffff, 5.0);
-	
-	//move the light back and up a bit
-	light.position.set(0, 3, 3);
-	
-	//remember to add the light to the scene
-	scene.add(light);
-	
-	//create a WebGLRenderer and set its width and height
-	renderer = new THREE.WebGLRenderer({antialias: true});
-	renderer.setSize(container.clientWidth, container.clientHeight);
-	
-	renderer.setPixelRatio(window.devicePixelRatio);
-	
-	//add the automatically created <canvas> element to the page
-	container.appendChild(renderer.domElement);
-	
-	//start the animation loop
-	renderer.setAnimationLoop( () => {
-		update();
-		render();
-	});
+
+  container = document.querySelector( '#scene-container' );
+
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color( 'skyblue' );
+
+  createCamera();
+  createControls();
+  createLights();
+  loadModels();
+  createRenderer();
+
+  renderer.setAnimationLoop( () => {
+
+    update();
+    render();
+
+  } );
 
 }
 
-//perform any updates to the scene, called once per frame
-//avoid heavy computation here
+function createCamera() {
+
+  camera = new THREE.PerspectiveCamera( 35, container.clientWidth / container.clientHeight, 1, 100 );
+  camera.position.set( -1.5, 1.5, 6.5 );
+
+}
+
+function createControls() {
+
+  controls = new THREE.OrbitControls( camera, container );
+
+}
+
+function createLights() {
+
+  const ambientLight = new THREE.HemisphereLight( 0xddeeff, 0x0f0e0d, 5 );
+
+  const mainLight = new THREE.DirectionalLight( 0xffffff, 5 );
+  mainLight.position.set( 10, 10, 10 );
+
+  scene.add( ambientLight, mainLight );
+
+}
+
+function loadModels() {
+
+  const loader = new THREE.GLTFLoader();
+
+  // A reusable function to set up the models. We're passing in a position parameter
+  // so that they can be individually placed around the scene
+  const onLoad = ( gltf, position ) => {
+
+    const model = gltf.scene.children[ 0 ];
+    model.position.copy( position );
+
+    const animation = gltf.animations[ 0 ];
+
+    const mixer = new THREE.AnimationMixer( model );
+    mixers.push( mixer );
+
+    const action = mixer.clipAction( animation );
+    action.play();
+
+    scene.add( model );
+
+  };
+
+  // the loader will report the loading progress to this function
+  const onProgress = () => {};
+
+  // the loader will send any error messages to this function, and we'll log
+  // them to to console
+  const onError = ( errorMessage ) => { console.log( errorMessage ); };
+
+  // load the first model. Each model is loaded asynchronously,
+  // so don't make any assumption about which one will finish loading first
+  const parrotPosition = new THREE.Vector3( 0, 0, 2.5 );
+  loader.load( '../models/Parrot.glb', gltf => onLoad( gltf, parrotPosition ), onProgress, onError );
+
+  const flamingoPosition = new THREE.Vector3( 7.5, 0, -10 );
+  loader.load( '../models/Flamingo.glb', gltf => onLoad( gltf, flamingoPosition ), onProgress, onError );
+
+  const storkPosition = new THREE.Vector3( 0, -2.5, -10 );
+  loader.load( '../models/Stork.glb', gltf => onLoad( gltf, storkPosition ), onProgress, onError );
+
+}
+
+function createRenderer() {
+
+  // create a WebGLRenderer and set its width and height
+  renderer = new THREE.WebGLRenderer( { antialias: true } );
+  renderer.setSize( container.clientWidth, container.clientHeight );
+
+  renderer.setPixelRatio( window.devicePixelRatio );
+
+  renderer.gammaFactor = 2.2;
+  renderer.gammaOutput = true;
+
+  renderer.physicallyCorrectLights = true;
+
+  container.appendChild( renderer.domElement );
+
+}
+
 function update() {
-	//increase the mesh's roatation each frame
-	mesh.rotation.z += 0.01;
-	mesh.rotation.x += 0.01;
-	mesh.rotation.y += 0.01;
+
+  const delta = clock.getDelta();
+
+  for ( const mixer of mixers ) {
+
+    mixer.update( delta );
+
+  }
+
 }
 
 function render() {
-	
-	renderer.render(scene, camera);
+
+  renderer.render( scene, camera );
+
 }
 
-//a function that will be called every time the window gets resized.
-//It can get called a lot, so don't put any heavy computation in here!
 function onWindowResize() {
-	//set the aspect ratio to match the new browser window aspect ratio
-	camera.aspect = container.clientWidth / container.clientHeight;
-	
-	//update the camera's frustum
-	camera.updateProjectionMatrix();
-	
-	//update the size of the renderer AND the canvas
-	renderer.setSize(container.clientWidth, container.clientHeight);
+
+  camera.aspect = container.clientWidth / container.clientHeight;
+
+  // update the camera's frustum
+  camera.updateProjectionMatrix();
+
+  renderer.setSize( container.clientWidth, container.clientHeight );
+
 }
 
-window.addEventListener('resize', onWindowResize);
+window.addEventListener( 'resize', onWindowResize );
 
-//call the init functiont to set everything updateCommands
 init();
