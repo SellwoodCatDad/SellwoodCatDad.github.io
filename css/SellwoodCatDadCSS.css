@@ -12,9 +12,6 @@
 	width: 400px;
 }
 
-.Nicknames {
-	font-weight: bold;
-}
 
 #TheClowder {
 	height: 675px;
@@ -34,4 +31,44 @@
 #Wheeze {
 	height: 500px;
 	width: 400px;
+}
+
+p.speech {
+  position: relative;
+  width: 200px;
+  height: 100px;
+  bottom: 515px;
+  left: 225px;
+  text-align: center;
+  line-height: 100px;
+  background-color: #fff;
+  border: 8px solid #600;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+  -webkit-box-shadow: 2px 2px 4px #888;
+  -moz-box-shadow: 2px 2px 4px #888;
+  box-shadow: 2px 2px 4px #888;
+}
+
+p.speech:before {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: 30px;
+  top: 92px;
+  border: 25px solid;
+  border-color: #600 transparent transparent #600;
+}
+
+p.speech:after {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: 38px;
+  top: 92px;
+  border: 15px solid;
+  border-color: #fff transparent transparent #fff;
 }

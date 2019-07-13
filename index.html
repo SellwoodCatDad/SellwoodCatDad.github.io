@@ -11,6 +11,7 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script type="text/javascript" src="scripts/GreetingScript.js"></script>
 	</head>
 	<body>
 		<div>
@@ -48,9 +49,20 @@
 					</div>
 				</div>
 				<div>
-					<p>Hello, my name is Sellwood Cat Dad, or Kevin. I'm the fellow below:</p>
-					<img id="MePic" src="pics/Me.jpg" />
-					<p>You're probably wondering what the heck is going on here? I certainly don't blame you for that.</p>
+					<p>Hello, my name is Sellwood Cat Dad, or Kevin. I'm the fellow below.
+						<div>
+							Want a more formal greeting? Feel free to enter your name here: <input id="visitorsName" type="text" />, and click the button <input type="button" id="greetVisitorButton" value="Greet Me!" />.
+						</div>
+					</p>
+					<div>
+						<div>
+							<img id="MePic" class="border border-info rounded-lg" src="pics/Me.jpg" />
+						</div>
+						<div>
+							<p class="speech"><p/>
+						</div>
+					</div>
+					<p>You're probably wondering what the heck is going on here? I certainly don't blame you for that. I'm also guessing you may have entered something in the bubble as an attempt to make me look dumb. I've tried to account for some of those statements, and inserted something other than that, as you might've seen.</p>
 					<p>This site is primarily about my cats, with a few other things peppered in.</p>
 					<p>I hope you enjoy the content, but am not overly concerned if you don't, as I love to program for fun, and I suppose that this is reflection of that. What better way to celebrate and exhibit what I've gleaned from the loads of programming material I've read? Well, with cat content, as I call it.</p>
 					<p>With that in mind check out my little ones:</p>
@@ -58,7 +70,7 @@
 			</div>
 		</div>
 		<div id="ClowderDiv">
-			<img id="TheClowder" alt="The Clowder" src="pics/TheClowder.jpg" usemap="#TheClowderMap"/>
+			<img id="TheClowder" class="border border-info rounded-lg" alt="The Clowder" src="pics/TheClowder.jpg" usemap="#TheClowderMap"/>
 			<div>
 				<p id="coord"></p>
 			</div>
