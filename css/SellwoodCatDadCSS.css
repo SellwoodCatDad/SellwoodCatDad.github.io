@@ -36,7 +36,8 @@ p.speech {
   position: relative;
   width: 200px;
   height: 100px;
-  right:1475px;
+  bottom: 515px;
+  left: 225px;
   text-align: center;
   line-height: 100px;
   background-color: #fff;
