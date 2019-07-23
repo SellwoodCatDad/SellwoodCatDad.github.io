@@ -12,14 +12,18 @@
 	width: 400px;
 }
 
+#Kitty {
+	height: 400px;
+	width: 400px;
+}
 
 #TheClowder {
 	height: 675px;
 	width: 900px;
 }
 
-#Kitty {
-	height: 400px;
+#Wheeze {
+	height: 500px;
 	width: 400px;
 }
 
@@ -28,17 +32,11 @@
 	width: 500px;
 }
 
-#Wheeze {
-	height: 500px;
-	width: 400px;
-}
-
 p.speech {
   position: relative;
   width: 200px;
   height: 100px;
-  bottom: 515px;
-  left: 225px;
+  right:1475px;
   text-align: center;
   line-height: 100px;
   background-color: #fff;
