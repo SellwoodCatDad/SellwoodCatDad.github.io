@@ -17,6 +17,11 @@
 	width: 400px;
 }
 
+#SpeechDiv {
+	height: 0px;
+	width: 0px;
+}
+
 #TheClowder {
 	height: 675px;
 	width: 900px;
